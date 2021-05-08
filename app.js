@@ -65,8 +65,25 @@ const getRemainingTime = () => {
   });
   if (t < 0) {
     clearInterval(countDown);
-    deadline.innerHTML = `<h4 class="expired">Happy Birthday James Iweobi</h4>`;
+    updateCount();
   }
 };
 let countDown = setInterval(getRemainingTime, 1000);
 getRemainingTime();
+
+// Update count to the next year
+const updateCount = () => {
+  const nextYearBirthday = new Date().getTime();
+  const oneDay = 24 * 60 * 60 * 1000;
+  const oneHour = 60 * 60 * 1000;
+  const oneMinute = 60 * 1000;
+  const day = Math.floor(nextYearBirthday / oneDay);
+  const hour = Math.floor((nextYearBirthday % oneDay) / oneHour);
+  const minute = Math.floor((nextYearBirthday % oneHour) / oneMinute);
+  const sec = Math.floor((nextYearBirthday % oneMinute) / 1000);
+
+  const values = [day, hour, minute, sec];
+  items.forEach((item, index) => {
+    item.innerHTML = format(values[index]);
+  });
+};
